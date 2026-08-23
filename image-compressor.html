@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Image Compressor — Tarexa</title>
+
+  <meta name="description" content="Compress JPG, PNG and WebP images directly in your browser with Tarexa Image Compressor.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="HKtareen">
+  <meta name="theme-color" content="#0b1020">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(108,99,255,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(0,212,255,.12), transparent 28%),
+        #070b16;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(900px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(7,11,22,.78);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      box-shadow: 0 8px 30px rgba(108,99,255,.35);
+    }
+
+    .back {
+      color: #aeb5ca;
+      font-size: 14px;
+    }
+
+    .back:hover {
+      color: white;
+    }
+
+    main {
+      padding: 70px 0;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      background: rgba(108,99,255,.14);
+      font-size: 34px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    h1 {
+      font-size: clamp(35px, 6vw, 55px);
+      letter-spacing: -2px;
+      margin-bottom: 15px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg,#8d82ff,#52c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #9fa8bd;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .card {
+      padding: 30px;
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .drop-zone {
+      border: 2px dashed rgba(140,130,255,.45);
+      border-radius: 20px;
+      padding: 50px 20px;
+      text-align: center;
+      background: rgba(108,99,255,.05);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: #8d82ff;
+      background: rgba(108,99,255,.10);
+    }
+
+    .upload-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .drop-zone h2 {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .drop-zone p {
+      color: #8992a8;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .upload-btn,
+    .download-btn {
+      display: inline-block;
+      border: none;
+      padding: 13px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .upload-btn:hover,
+    .download-btn:hover {
+      opacity: .9;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .controls {
+      margin-top: 25px;
+      display: none;
+    }
+
+    .control-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #cbd1df;
+      font-size: 14px;
+    }
+
+    .quality-value {
+      color: #a9a3ff;
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #766cff;
+      cursor: pointer;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .preview-box {
+      padding: 15px;
+      border-radius: 17px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .preview-box h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #b8bfd0;
+    }
+
+    .preview-box img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #050810;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(108,99,255,.08);
+      color: #aab2c7;
+      font-size: 14px;
+    }
+
+    .download-area {
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      color: #8f98ad;
+      font-size: 13px;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 35px 0 25px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #687185;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      .nav {
+        height: 66px;
+      }
+
+      main {
+        padding: 50px 0;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+      <span class="logo-icon">T</span>
+      Tarexa
+    </a>
+
+    <a href="index.html" class="back">← Back to Tools</a>
+
+  </div>
+</header>
+
+<main>
+
+  <div class="container">
+
+    <div class="hero">
+      <div class="icon">🖼️</div>
+
+      <h1>
+        Image <span class="gradient">Compressor</span>
+      </h1>
+
+      <p>
+        Compress JPG, PNG and WebP images quickly while keeping
+        a good balance between quality and file size.
+      </p>
+    </div>
+
+    <div class="card">
+
+      <div class="drop-zone" id="dropZone">
+
+        <div class="upload-icon">📤</div>
+
+        <h2>Drop your image here</h2>
+
+        <p>
+          or choose an image from your device
+        </p>
+
+        <label for="fileInput" class="upload-btn">
+          Choose Image
+        </label>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+      </div>
+
+      <div class="controls" id="controls">
+
+        <div class="control-title">
+          <span>Compression Quality</span>
+          <span class="quality-value" id="qualityValue">80%</span>
+        </div>
+
+        <input
+          type="range"
+          id="quality"
+          min="10"
+          max="100"
+          value="80"
+        >
+
+      </div>
+
+      <div class="preview" id="preview">
+
+        <div class="preview-grid">
+
+          <div class="preview-box">
+            <h3>Original Image</h3>
+            <img id="originalPreview" alt="Original image">
+          </div>
+
+          <div class="preview-box">
+            <h3>Compressed Image</h3>
+            <img id="compressedPreview" alt="Compressed image">
+          </div>
+
+        </div>
+
+        <div class="stats">
+          <span>
+            Original:
+            <strong id="originalSize">0 KB</strong>
+          </span>
+
+          <span>
+            Compressed:
+            <strong id="compressedSize">0 KB</strong>
+          </span>
+
+          <span>
+            Saved:
+            <strong id="savedSize">0%</strong>
+          </span>
+        </div>
+
+        <div class="download-area">
+
+          <a
+            id="downloadBtn"
+            class="download-btn"
+            download="tarexa-compressed-image.jpg"
+          >
+            Download Compressed Image
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="message" id="message">
+        Your image is processed directly in your browser.
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Tarexa. All rights reserved.
+  <br><br>
+  Built by <strong>HKtareen</strong>
+</footer>
+
+<script>
+
+  const fileInput = document.getElementById("fileInput");
+  const dropZone = document.getElementById("dropZone");
+  const quality = document.getElementById("quality");
+  const qualityValue = document.getElementById("qualityValue");
+
+  const controls = document.getElementById("controls");
+  const preview = document.getElementById("preview");
+
+  const originalPreview =
+    document.getElementById("originalPreview");
+
+  const compressedPreview =
+    document.getElementById("compressedPreview");
+
+  const originalSize =
+    document.getElementById("originalSize");
+
+  const compressedSize =
+    document.getElementById("compressedSize");
+
+  const savedSize =
+    document.getElementById("savedSize");
+
+  const downloadBtn =
+    document.getElementById("downloadBtn");
+
+  let selectedFile = null;
+
+  function formatSize(bytes) {
+
+    if (bytes < 1024) {
+      return bytes + " B";
+    }
+
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function loadFile(file) {
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file.");
+      return;
+    }
+
+    selectedFile = file;
+
+    const originalURL = URL.createObjectURL(file);
+
+    originalPreview.src = originalURL;
+
+    originalSize.textContent = formatSize(file.size);
+
+    controls.style.display = "block";
+    preview.style.display = "block";
+
+    compressImage();
+
+  }
+
+  function compressImage() {
+
+    if (!selectedFile) return;
+
+    const img = new Image();
+
+    img.onload = function () {
+
+      const canvas = document.createElement("canvas");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const qualityValueNumber =
+        Number(quality.value) / 100;
+
+      canvas.toBlob(
+        function (blob) {
+
+          if (!blob) return;
+
+          const compressedURL =
+            URL.createObjectURL(blob);
+
+          compressedPreview.src =
+            compressedURL;
+
+          compressedSize.textContent =
+            formatSize(blob.size);
+
+          let saved =
+            ((selectedFile.size - blob.size) /
+            selectedFile.size) * 100;
+
+          if (saved < 0) {
+            saved = 0;
+          }
+
+          savedSize.textContent =
+            saved.toFixed(1) + "%";
+
+          downloadBtn.href =
+            compressedURL;
+
+        },
+        "image/jpeg",
+        qualityValueNumber
+      );
+
+    };
+
+    img.src =
+      URL.createObjectURL(selectedFile);
+
+  }
+
+  fileInput.addEventListener(
+    "change",
+    function () {
+
+      loadFile(this.files[0]);
+
+    }
+  );
+
+  quality.addEventListener(
+    "input",
+    function () {
+
+      qualityValue.textContent =
+        this.value + "%";
+
+      compressImage();
+
+    }
+  );
+
+  dropZone.addEventListener(
+    "dragover",
+    function (event) {
+
+      event.preventDefault();
+
+      dropZone.classList.add("dragover");
+
+    }
+  );
+
+  dropZone.addEventListener(
+    "dragleave",
+    function () {
+
+      dropZone.classList.remove("dragover");
+
+    }
+  );
+
+  dropZone.addEventListener(
+    "drop",
+    function (event) {
+
+      event.preventDefault();
+
+      dropZone.classList.remove("dragover");
+
+      const file =
+        event.dataTransfer.files[0];
+
+      loadFile(file);
+
+    }
+  );
+
+</script>
+
+</body>
+      </html>
