@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tarexa - Fast, simple and free online tools for everyday tasks.">
+<meta name="robots" content="index, follow">
+
+<title>Tarexa — Smart Online Tools</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #635bff;
+  --primary-dark: #5147e8;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* NAVBAR */
+
+.navbar {
+  height: 72px;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(226,232,240,.8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1180px;
+  height: 100%;
+  margin: auto;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  color: var(--primary);
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 92px 20px 75px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(99,91,255,.13), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(14,165,233,.12), transparent 28%),
+    linear-gradient(180deg,#ffffff,#f8fafc);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f1f0ff;
+  color: var(--primary);
+  border: 1px solid #e5e2ff;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  max-width: 800px;
+  margin: auto;
+  font-size: clamp(42px, 7vw, 70px);
+  line-height: 1.05;
+  letter-spacing: -3px;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero-description {
+  max-width: 650px;
+  margin: 22px auto 34px;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+/* SEARCH */
+
+.search-container {
+  max-width: 650px;
+  margin: auto;
+  position: relative;
+}
+
+.search-container input {
+  width: 100%;
+  height: 62px;
+  padding: 0 22px 0 52px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: white;
+  font-size: 15px;
+  box-shadow: 0 15px 40px rgba(15,23,42,.08);
+  transition: .2s;
+}
+
+.search-container input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 15px 40px rgba(99,91,255,.13);
+}
+
+.search-icon {
+  position: absolute;
+  left: 19px;
+  top: 18px;
+  font-size: 22px;
+}
+
+/* MAIN */
+
+.container {
+  max-width: 1180px;
+  margin: auto;
+  padding: 70px 22px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 25px;
+}
+
+.section-header h2 {
+  font-size: 28px;
+  letter-spacing: -.8px;
+}
+
+.section-header p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* TOOLS */
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+}
+
+.tool {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool:hover {
+  transform: translateY(-5px);
+  border-color: #d5d1ff;
+  box-shadow: 0 20px 45px rgba(15,23,42,.09);
+}
+
+.tool-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tool-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background: #f1f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.arrow {
+  color: #94a3b8;
+  font-size: 20px;
+  transition: .2s;
+}
+
+.tool:hover .arrow {
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+.tool h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  letter-spacing: -.3px;
+}
+
+.tool p {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* CATEGORIES */
+
+.categories {
+  margin-top: 75px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  gap: 12px;
+}
+
+.category {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 19px 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.category:hover {
+  border-color: #c9c4ff;
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.category-icon {
+  display: block;
+  font-size: 23px;
+  margin-bottom: 7px;
+}
+
+/* CTA */
+
+.cta {
+  margin-top: 75px;
+  border-radius: 24px;
+  padding: 55px 25px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 25%),
+    linear-gradient(135deg,#635bff,#4f46e5);
+  color: white;
+}
+
+.cta h2 {
+  font-size: 31px;
+  margin-bottom: 10px;
+}
+
+.cta p {
+  color: #e0e7ff;
+  max-width: 600px;
+  margin: auto;
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top: 30px;
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 45px 22px;
+}
+
+.footer-inner {
+  max-width: 1180px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.footer-brand {
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.footer-brand span {
+  color: #8b85ff;
+}
+
+.footer-text {
+  max-width: 420px;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.footer-copy {
+  text-align: right;
+  font-size: 12px;
+}
+
+/* MOBILE */
+
+@media(max-width:850px) {
+
+  .tools-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+}
+
+@media(max-width:600px) {
+
+  .navbar {
+    height: 64px;
+  }
+
+  .nav-links a:first-child {
+    display: none;
+  }
+
+  .logo {
+    font-size: 23px;
+  }
+
+  .hero {
+    padding: 65px 16px 55px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+    letter-spacing: -2px;
+  }
+
+  .hero-description {
+    font-size: 15px;
+  }
+
+  .search-container input {
+    height: 57px;
+  }
+
+  .container {
+    padding: 50px 16px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .footer-copy {
+    text-align: left;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+
+    <a href="index.html" class="logo">
+      Tar<span>exa</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#categories">Categories</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-badge">
+    ✦ Free tools. Simple. Fast.
+  </div>
+
+  <h1>
+    Everything you need,<br>
+    <span>in one place.</span>
+  </h1>
+
+  <p class="hero-description">
+    Powerful online tools for calculations, conversions, PDFs,
+    security and everyday digital tasks.
+  </p>
+
+  <div class="search-container">
+    <span class="search-icon">⌕</span>
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="What do you need?"
+      autocomplete="off"
+    >
+  </div>
+
+</section>
+
+
+<main class="container">
+
+<section id="tools">
+
+  <div class="section-header">
+    <div>
+      <h2>Popular tools</h2>
+      <p>Our most useful tools, ready when you need them.</p>
+    </div>
+  </div>
+
+  <div class="tools-grid" id="toolsGrid">
+
+    <a class="tool" href="qr-code-generator.html">
+      <div class="tool-top">
+        <div class="tool-icon">▦</div>
+        <div class="arrow">→</div>
+      </div>
+
+      <h3>QR Code Generator</h3>
+      <p>Create QR codes for links, text and more.</p>
+    </a>
+
+
+    <a class="tool" href="password-generator.html">
+      <div class="tool-top">
+        <div class="tool-icon">🔐</div>
+        <div class="arrow">→</div>
+      </div>
+
+      <h3>Password Generator</h3>
+      <p>Create strong and secure passwords instantly.</p>
+    </a>
+
+
+    <a class="tool" href="currency-converter.html">
+      <div class="tool-top">
+        <div class="tool-icon">💱</div>
+        <div class="arrow">→</div>
+      </div>
+
+      <h3>Currency Converter</h3>
+      <p>Convert currencies quickly and easily.</p>
+    </a>
+
+
+    <a class="tool" href="pdf-to-word.html">
+      <div class="tool-top">
+        <div class="tool-icon">📄</div>
+        <div class="arrow">→</div>
+      </div>
+
+      <h3>PDF to Word</h3>
+      <p>Turn PDF documents into editable Word files.</p>
+    </a>
+
+
+    <a class="tool" href="percentage-calculator.html">
+      <div class="tool-top">
+        <div class="tool-icon">%</div>
+        <div class="arrow">→</div>
+      </div>
+
+      <h3>Percentage Calculator</h3>
+      <p>Calculate percentages quickly and accurately.</p>
+    </a>
+
+  </div>
+
+</section>
+
+
+<section class="categories" id="categories">
+
+  <div class="section-header">
+    <div>
+      <h2>Explore categories</h2>
+      <p>Find the right tool for your task.</p>
+    </div>
+  </div>
+
+  <div class="category-grid">
+
+    <a href="#" class="category">
+      <span class="category-icon">🧮</span>
+      Calculators
+    </a>
+
+    <a href="#" class="category">
+      <span class="category-icon">📄</span>
+      PDF Tools
+    </a>
+
+    <a href="#" class="category">
+      <span class="category-icon">🖼️</span>
+      Image Tools
+    </a>
+
+    <a href="#" class="category">
+      <span class="category-icon">✍️</span>
+      Text Tools
+    </a>
+
+    <a href="#" class="category">
+      <span class="category-icon">🔄</span>
+      Converters
+    </a>
+
+    <a href="#" class="category">
+      <span class="category-icon">🔐</span>
+      Security
+    </a>
+
+  </div>
+
+</section>
+
+
+<section class="cta">
+
+  <h2>Simple tools. Real results.</h2>
+
+  <p>
+    Tarexa is built to make everyday online tasks faster,
+    easier and accessible from any device.
+  </p>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div>
+      <div class="footer-brand">
+        Tar<span>exa</span>
+      </div>
+
+      <p class="footer-text">
+        Free and useful online tools for everyday digital tasks.
+      </p>
+    </div>
+
+    <div class="footer-copy">
+      © 2026 Tarexa. All rights reserved.
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+const tools = document.querySelectorAll(".tool");
+
+searchInput.addEventListener("input", function() {
+
+  const query = this.value.toLowerCase().trim();
+
+  tools.forEach(tool => {
+
+    const text = tool.innerText.toLowerCase();
+
+    if (text.includes(query)) {
+      tool.style.display = "block";
+    } else {
+      tool.style.display = "none";
+    }
+
+  });
+
+});
+
+</script>
+
+</body>
+  </html>
