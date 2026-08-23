@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BMI Calculator — Tarexa</title>
+
+  <meta name="description" content="Free BMI Calculator by Tarexa. Calculate your Body Mass Index using your height and weight with a simple, fast and easy-to-use calculator.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="HKtareen">
+  <meta name="theme-color" content="#0b1020">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(108,99,255,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(0,212,255,.12), transparent 28%),
+        #070b16;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(7,11,22,.78);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      box-shadow: 0 8px 30px rgba(108,99,255,.35);
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #aeb5ca;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .nav-btn {
+      padding: 11px 17px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 65px 0 80px;
+    }
+
+    .breadcrumb {
+      color: #858ea3;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb a {
+      color: #a9a3ff;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .tool-icon {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      background: rgba(108,99,255,.14);
+      border: 1px solid rgba(108,99,255,.25);
+      font-size: 32px;
+      box-shadow: 0 15px 45px rgba(108,99,255,.12);
+    }
+
+    .tool-header h1 {
+      font-size: clamp(34px, 6vw, 54px);
+      letter-spacing: -2px;
+      margin-bottom: 14px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#8d82ff,#52c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tool-header p {
+      max-width: 650px;
+      margin: auto;
+      color: #9da6ba;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* CALCULATOR */
+
+    .calculator-card {
+      max-width: 850px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    }
+
+    .calculator-card h2 {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #858ea3;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .unit-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .unit-btn {
+      flex: 1;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.045);
+      color: #aeb5ca;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .unit-btn.active {
+      background: rgba(108,99,255,.16);
+      border-color: rgba(108,99,255,.45);
+      color: white;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      color: #c5cad8;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 17px;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.11);
+      outline: none;
+      background: rgba(255,255,255,.055);
+      color: white;
+      font-size: 16px;
+      transition: .2s;
+    }
+
+    .input-group input:focus {
+      border-color: rgba(120,110,255,.7);
+      box-shadow: 0 0 0 3px rgba(108,99,255,.08);
+    }
+
+    .calculate-btn {
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 35px rgba(108,99,255,.25);
+      transition: .2s;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(108,99,255,.35);
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .main-result {
+      text-align: center;
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(108,99,255,.09);
+      border: 1px solid rgba(108,99,255,.2);
+      margin-bottom: 15px;
+    }
+
+    .result-label {
+      color: #929bb0;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .bmi-value {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(90deg,#9b91ff,#5ed1ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .bmi-category {
+      margin-top: 7px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #c9cdfc;
+    }
+
+    .bmi-scale {
+      margin-top: 20px;
+      height: 10px;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          90deg,
+          #4e8cff 0%,
+          #4e8cff 18.5%,
+          #5ed1ff 18.5%,
+          #5ed1ff 46.5%,
+          #766cff 46.5%,
+          #766cff 70%,
+          #9b91ff 70%,
+          #9b91ff 100%
+        );
+    }
+
+    .scale-labels {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 5px;
+      margin-top: 9px;
+      color: #747e94;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .error {
+      display: none;
+      color: #ff8e9c;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    /* INFO */
+
+    .info-box {
+      max-width: 850px;
+      margin: 30px auto 0;
+      padding: 30px;
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(108,99,255,.12),
+          rgba(54,190,255,.06)
+        );
+      border: 1px solid rgba(255,255,255,.09);
+      line-height: 1.8;
+    }
+
+    .info-box h2 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .info-box p {
+      color: #9da6ba;
+      font-size: 14px;
+    }
+
+    .formula {
+      margin-top: 18px;
+      padding: 17px;
+      border-radius: 13px;
+      background: rgba(0,0,0,.2);
+      color: #c7caff;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .bmi-table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .bmi-table th,
+    .bmi-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .bmi-table th {
+      color: #c7caff;
+    }
+
+    .bmi-table td {
+      color: #8d96aa;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 40px 0 25px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.15);
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-content p {
+      color: #666f83;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .footer-links {
+      margin-top: 18px;
+    }
+
+    .footer-links a {
+      color: #858ea3;
+      font-size: 13px;
+      margin: 0 8px;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      .nav {
+        height: 66px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .logo-icon {
+        width: 38px;
+        height: 38px;
+      }
+
+      nav a:not(.nav-btn) {
+        display: none;
+      }
+
+      main {
+        padding: 45px 0 60px;
+      }
+
+      .calculator-card {
+        padding: 22px;
+      }
+
+      .unit-selector {
+        flex-direction: column;
+      }
+
+      .tool-header h1 {
+        letter-spacing: -1px;
+      }
+
+      .info-box {
+        padding: 23px;
+      }
+
+      .bmi-table {
+        font-size: 12px;
+      }
+
+      .bmi-table th,
+      .bmi-table td {
+        padding: 9px 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="container nav">
+
+      <a href="index.html" class="logo">
+        <span class="logo-icon">T</span>
+        Tarexa
+      </a>
+
+      <nav>
+        <a href="index.html#popular">Popular</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-btn">Contact</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main>
+
+    <div class="container">
+
+      <div class="breadcrumb">
+        <a href="index.html">Tarexa</a>
+        &nbsp; / &nbsp; BMI Calculator
+      </div>
+
+
+      <div class="tool-header">
+
+        <div class="tool-icon">⚖️</div>
+
+        <h1>
+          BMI <span class="gradient-text">Calculator</span>
+        </h1>
+
+        <p>
+          Calculate your Body Mass Index using your height and weight
+          with this simple and easy-to-use calculator.
+        </p>
+
+      </div>
+
+
+      <div class="calculator-card">
+
+        <h2>Calculate Your BMI</h2>
+
+        <p class="description">
+          Choose your preferred measurement system and enter your height
+          and weight.
+        </p>
+
+
+        <!-- UNIT SELECTOR -->
+
+        <div class="unit-selector">
+
+          <button
+            class="unit-btn active"
+            id="metricBtn"
+            onclick="setUnit('metric')">
+            Metric (kg / cm)
+          </button>
+
+          <button
+            class="unit-btn"
+            id="imperialBtn"
+            onclick="setUnit('imperial')">
+            Imperial (lb / in)
+          </button>
+
+        </div>
+
+
+        <!-- METRIC -->
+
+        <div id="metricInputs">
+
+          <div class="input-group">
+
+            <label for="heightCm">
+              Height (cm)
+            </label>
+
+            <input
+              type="number"
+              id="heightCm"
+              placeholder="e.g. 175"
+              min="50"
+              max="300"
+              step="any"
+            >
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="weightKg">
+              Weight (kg)
+            </label>
+
+            <input
+              type="number"
+              id="weightKg"
+              placeholder="e.g. 70"
+              min="1"
+              max="500"
+              step="any"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- IMPERIAL -->
+
+        <div id="imperialInputs" style="display:none;">
+
+          <div class="input-group">
+
+            <label for="heightIn">
+              Height (inches)
+            </label>
+
+            <input
+              type="number"
+              id="heightIn"
+              placeholder="e.g. 69"
+              min="20"
+              max="120"
+              step="any"
+            >
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label for="weightLb">
+              Weight (lb)
+            </label>
+
+            <input
+              type="number"
+              id="weightLb"
+              placeholder="e.g. 154"
+              min="1"
+              max="1000"
+              step="any"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="calculate-btn"
+          onclick="calculateBMI()">
+          Calculate BMI
+        </button>
+
+
+        <div class="error" id="error">
+          Please enter valid height and weight values.
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="result" id="result">
+
+          <div class="main-result">
+
+            <div class="result-label">
+              Your BMI
+            </div>
+
+            <div class="bmi-value" id="bmiValue">
+              0.0
+            </div>
+
+            <div class="bmi-category" id="bmiCategory">
+              —
+            </div>
+
+            <div class="bmi-scale"></div>
+
+            <div class="scale-labels">
+              <span>Underweight</span>
+              <span>Normal</span>
+              <span>Overweight</span>
+              <span>Obesity</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATION -->
+
+      <div class="info-box">
+
+        <h2>What is BMI?</h2>
+
+        <p>
+          Body Mass Index (BMI) is a commonly used screening measurement
+          based on a person's weight and height. It can provide a general
+          indication of weight category for adults, but it does not
+          directly measure body fat or overall health.
+        </p>
+
+
+        <div class="formula">
+          BMI = Weight (kg) ÷ Height² (m²)
+        </div>
+
+
+        <table class="bmi-table">
+
+          <thead>
+            <tr>
+              <th>BMI Range</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>Below 18.5</td>
+              <td>Underweight</td>
+            </tr>
+
+            <tr>
+              <td>18.5 – 24.9</td>
+              <td>Normal weight</td>
+            </tr>
+
+            <tr>
+              <td>25.0 – 29.9</td>
+              <td>Overweight</td>
+            </tr>
+
+            <tr>
+              <td>30.0 or above</td>
+              <td>Obesity</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-content">
+
+        <div class="logo" style="justify-content:center;">
+          <span class="logo-icon">T</span>
+          Tarexa
+        </div>
+
+        <p>
+          Useful online tools designed to make everyday digital tasks
+          faster, easier and simpler.
+        </p>
+
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#popular">Popular Tools</a>
+          <a href="index.html#categories">Categories</a>
+        </div>
+
+        <p>
+          © 2026 Tarexa. All rights reserved.
+          <br><br>
+          Built by <strong>HKtareen</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    let currentUnit = "metric";
+
+
+    function setUnit(unit) {
+
+      currentUnit = unit;
+
+      const metricInputs =
+        document.getElementById("metricInputs");
+
+      const imperialInputs =
+        document.getElementById("imperialInputs");
+
+      const metricBtn =
+        document.getElementById("metricBtn");
+
+      const imperialBtn =
+        document.getElementById("imperialBtn");
+
+
+      if (unit === "metric") {
+
+        metricInputs.style.display = "block";
+        imperialInputs.style.display = "none";
+
+        metricBtn.classList.add("active");
+        imperialBtn.classList.remove("active");
+
+      } else {
+
+        metricInputs.style.display = "none";
+        imperialInputs.style.display = "block";
+
+        metricBtn.classList.remove("active");
+        imperialBtn.classList.add("active");
+
+      }
+
+
+      document.getElementById("result")
+        .classList.remove("show");
+
+      document.getElementById("error")
+        .style.display = "none";
+    }
+
+
+    function calculateBMI() {
+
+      let bmi = 0;
+
+      const error =
+        document.getElementById("error");
+
+      const result =
+        document.getElementById("result");
+
+      const bmiValue =
+        document.getElementById("bmiValue");
+
+      const bmiCategory =
+        document.getElementById("bmiCategory");
+
+
+      if (currentUnit === "metric") {
+
+        const height =
+          parseFloat(
+            document.getElementById("heightCm").value
+          );
+
+        const weight =
+          parseFloat(
+            document.getElementById("weightKg").value
+          );
+
+
+        if (
+          isNaN(height) ||
+          isNaN(weight) ||
+          height <= 0 ||
+          weight <= 0
+        ) {
+
+          showError(
+            "Please enter valid height and weight values."
+          );
+
+          return;
+        }
+
+
+        const heightMeters =
+          height / 100;
+
+        bmi =
+          weight / (heightMeters * heightMeters);
+
+      } else {
+
+        const height =
+          parseFloat(
+            document.getElementById("heightIn").value
+          );
+
+        const weight =
+          parseFloat(
+            document.getElementById("weightLb").value
+          );
+
+
+        if (
+          isNaN(height) ||
+          isNaN(weight) ||
+          height <= 0 ||
+          weight <= 0
+        ) {
+
+          showError(
+            "Please enter valid height and weight values."
+          );
+
+          return;
+        }
+
+
+        bmi =
+          (weight / (height * height)) * 703;
+      }
+
+
+      if (!isFinite(bmi)) {
+
+        showError(
+          "Unable to calculate BMI. Please check your values."
+        );
+
+        return;
+      }
+
+
+      error.style.display = "none";
+
+      bmiValue.textContent =
+        bmi.toFixed(1);
+
+
+      if (bmi < 18.5) {
+
+        bmiCategory.textContent =
+          "Underweight";
+
+      } else if (bmi < 25) {
+
+        bmiCategory.textContent =
+          "Normal weight";
+
+      } else if (bmi < 30) {
+
+        bmiCategory.textContent =
+          "Overweight";
+
+      } else {
+
+        bmiCategory.textContent =
+          "Obesity";
+      }
+
+
+      result.classList.add("show");
+    }
+
+
+    function showError(message) {
+
+      const error =
+        document.getElementById("error");
+
+      const result =
+        document.getElementById("result");
+
+      error.textContent = message;
+      error.style.display = "block";
+
+      result.classList.remove("show");
+    }
+
+
+    // ENTER KEY SUPPORT
+
+    document.addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        calculateBMI();
+      }
+
+    });
+
+  </script>
+
+</body>
+              </html>
