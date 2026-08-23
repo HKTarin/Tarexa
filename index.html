@@ -1,663 +1,815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Tarexa - Fast, simple and free online tools for everyday tasks.">
-<meta name="robots" content="index, follow">
-
-<title>Tarexa — Smart Online Tools</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
-  --border: #e2e8f0;
-  --primary: #635bff;
-  --primary-dark: #5147e8;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* NAVBAR */
-
-.navbar {
-  height: 72px;
-  background: rgba(255,255,255,.88);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(226,232,240,.8);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav-inner {
-  max-width: 1180px;
-  height: 100%;
-  margin: auto;
-  padding: 0 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  text-decoration: none;
-  color: var(--text);
-  font-size: 25px;
-  font-weight: 800;
-  letter-spacing: -1px;
-}
-
-.logo span {
-  color: var(--primary);
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #475569;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.nav-links a:hover {
-  color: var(--primary);
-}
-
-/* HERO */
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 92px 20px 75px;
-  text-align: center;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(99,91,255,.13), transparent 28%),
-    radial-gradient(circle at 80% 30%, rgba(14,165,233,.12), transparent 28%),
-    linear-gradient(180deg,#ffffff,#f8fafc);
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: #f1f0ff;
-  color: var(--primary);
-  border: 1px solid #e5e2ff;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 22px;
-}
-
-.hero h1 {
-  max-width: 800px;
-  margin: auto;
-  font-size: clamp(42px, 7vw, 70px);
-  line-height: 1.05;
-  letter-spacing: -3px;
-  font-weight: 800;
-}
-
-.hero h1 span {
-  color: var(--primary);
-}
-
-.hero-description {
-  max-width: 650px;
-  margin: 22px auto 34px;
-  color: var(--muted);
-  font-size: 17px;
-}
-
-/* SEARCH */
-
-.search-container {
-  max-width: 650px;
-  margin: auto;
-  position: relative;
-}
-
-.search-container input {
-  width: 100%;
-  height: 62px;
-  padding: 0 22px 0 52px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  outline: none;
-  background: white;
-  font-size: 15px;
-  box-shadow: 0 15px 40px rgba(15,23,42,.08);
-  transition: .2s;
-}
-
-.search-container input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 15px 40px rgba(99,91,255,.13);
-}
-
-.search-icon {
-  position: absolute;
-  left: 19px;
-  top: 18px;
-  font-size: 22px;
-}
-
-/* MAIN */
-
-.container {
-  max-width: 1180px;
-  margin: auto;
-  padding: 70px 22px;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin-bottom: 25px;
-}
-
-.section-header h2 {
-  font-size: 28px;
-  letter-spacing: -.8px;
-}
-
-.section-header p {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-/* TOOLS */
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 18px;
-}
-
-.tool {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 24px;
-  text-decoration: none;
-  color: inherit;
-  transition: .25s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.tool:hover {
-  transform: translateY(-5px);
-  border-color: #d5d1ff;
-  box-shadow: 0 20px 45px rgba(15,23,42,.09);
-}
-
-.tool-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tool-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 15px;
-  background: #f1f0ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-}
-
-.arrow {
-  color: #94a3b8;
-  font-size: 20px;
-  transition: .2s;
-}
-
-.tool:hover .arrow {
-  color: var(--primary);
-  transform: translateX(3px);
-}
-
-.tool h3 {
-  margin-top: 20px;
-  font-size: 18px;
-  letter-spacing: -.3px;
-}
-
-.tool p {
-  margin-top: 7px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-/* CATEGORIES */
-
-.categories {
-  margin-top: 75px;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(6,1fr);
-  gap: 12px;
-}
-
-.category {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 19px 10px;
-  text-align: center;
-  text-decoration: none;
-  color: #334155;
-  font-size: 13px;
-  font-weight: 600;
-  transition: .2s;
-}
-
-.category:hover {
-  border-color: #c9c4ff;
-  color: var(--primary);
-  transform: translateY(-2px);
-}
-
-.category-icon {
-  display: block;
-  font-size: 23px;
-  margin-bottom: 7px;
-}
-
-/* CTA */
-
-.cta {
-  margin-top: 75px;
-  border-radius: 24px;
-  padding: 55px 25px;
-  text-align: center;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 25%),
-    linear-gradient(135deg,#635bff,#4f46e5);
-  color: white;
-}
-
-.cta h2 {
-  font-size: 31px;
-  margin-bottom: 10px;
-}
-
-.cta p {
-  color: #e0e7ff;
-  max-width: 600px;
-  margin: auto;
-  font-size: 14px;
-}
-
-/* FOOTER */
-
-footer {
-  margin-top: 30px;
-  background: #0f172a;
-  color: #94a3b8;
-  padding: 45px 22px;
-}
-
-.footer-inner {
-  max-width: 1180px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.footer-brand {
-  color: white;
-  font-size: 21px;
-  font-weight: 800;
-}
-
-.footer-brand span {
-  color: #8b85ff;
-}
-
-.footer-text {
-  max-width: 420px;
-  font-size: 13px;
-  margin-top: 8px;
-}
-
-.footer-copy {
-  text-align: right;
-  font-size: 12px;
-}
-
-/* MOBILE */
-
-@media(max-width:850px) {
-
-  .tools-grid {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .category-grid {
-    grid-template-columns: repeat(3,1fr);
-  }
-
-  .nav-links {
-    gap: 14px;
-  }
-}
-
-@media(max-width:600px) {
-
-  .navbar {
-    height: 64px;
-  }
-
-  .nav-links a:first-child {
-    display: none;
-  }
-
-  .logo {
-    font-size: 23px;
-  }
-
-  .hero {
-    padding: 65px 16px 55px;
-  }
-
-  .hero h1 {
-    font-size: 43px;
-    letter-spacing: -2px;
-  }
-
-  .hero-description {
-    font-size: 15px;
-  }
-
-  .search-container input {
-    height: 57px;
-  }
-
-  .container {
-    padding: 50px 16px;
-  }
-
-  .section-header h2 {
-    font-size: 24px;
-  }
-
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .category-grid {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .footer-inner {
-    flex-direction: column;
-  }
-
-  .footer-copy {
-    text-align: left;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tarexa — Free Online Tools</title>
+
+  <meta name="description" content="Tarexa provides fast, useful and easy-to-use online calculators, image tools, PDF tools, AI tools, video and audio tools.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="HKtareen">
+  <meta name="theme-color" content="#0b1020">
+
+  <meta property="og:title" content="Tarexa — Free Online Tools">
+  <meta property="og:description" content="Fast and useful online tools for everyday tasks.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%236c63ff'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-size='55' fill='white' font-family='Arial' font-weight='bold'%3ET%3C/text%3E%3C/svg%3E">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(108,99,255,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(0,212,255,.12), transparent 28%),
+        #070b16;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(7,11,22,.78);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      box-shadow: 0 8px 30px rgba(108,99,255,.35);
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      color: #aeb5ca;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .nav-btn {
+      padding: 11px 17px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 85px 0 55px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(120,110,255,.3);
+      background: rgba(108,99,255,.1);
+      color: #b9b4ff;
+      border-radius: 100px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: .98;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#8d82ff,#52c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: auto;
+      color: #aab2c7;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    /* SEARCH */
+
+    .search-box {
+      max-width: 700px;
+      margin: 34px auto 0;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 19px 24px 19px 54px;
+      border-radius: 17px;
+      border: 1px solid rgba(255,255,255,.12);
+      outline: none;
+      background: rgba(255,255,255,.065);
+      color: white;
+      font-size: 16px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .search-box input:focus {
+      border-color: rgba(120,110,255,.65);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #9ca5bc;
+    }
+
+    /* SECTION */
+
+    section {
+      padding: 45px 0;
+    }
+
+    .section-head {
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .section-head p {
+      color: #8992a8;
+    }
+
+    /* TOOLS */
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 17px;
+    }
+
+    .tool-card {
+      position: relative;
+      padding: 24px;
+      min-height: 190px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 20px;
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+      box-shadow: 0 15px 45px rgba(0,0,0,.16);
+      transition: .25s ease;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(108,99,255,.16);
+      filter: blur(40px);
+      top: -35px;
+      right: -35px;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(135,125,255,.4);
+      box-shadow: 0 20px 55px rgba(0,0,0,.3);
+    }
+
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(108,99,255,.14);
+      font-size: 23px;
+      margin-bottom: 17px;
+    }
+
+    .tool-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .tool-card p {
+      color: #9199ae;
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 17px;
+    }
+
+    .use-btn {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #a9a3ff;
+    }
+
+    /* CATEGORIES */
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 15px;
+    }
+
+    .category {
+      padding: 23px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.045);
+      transition: .2s;
+    }
+
+    .category:hover {
+      background: rgba(255,255,255,.08);
+      transform: translateY(-3px);
+    }
+
+    .category span {
+      font-size: 25px;
+    }
+
+    .category h3 {
+      margin-top: 13px;
+      font-size: 16px;
+    }
+
+    .category p {
+      margin-top: 6px;
+      color: #818a9e;
+      font-size: 13px;
+    }
+
+    /* INFO */
+
+    .info-box {
+      padding: 35px;
+      border-radius: 24px;
+      background: linear-gradient(135deg,
+        rgba(108,99,255,.12),
+        rgba(54,190,255,.06));
+      border: 1px solid rgba(255,255,255,.09);
+      line-height: 1.8;
+    }
+
+    .info-box h2 {
+      margin-bottom: 12px;
+    }
+
+    .info-box p {
+      color: #a3abc0;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 50px;
+      padding: 45px 0 25px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.15);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand p {
+      max-width: 430px;
+      color: #858ea3;
+      line-height: 1.7;
+      margin-top: 13px;
+    }
+
+    .footer-col h4 {
+      margin-bottom: 14px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #858ea3;
+      margin: 9px 0;
+      font-size: 14px;
+    }
+
+    .footer-col a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      color: #666f83;
+      font-size: 13px;
+      margin-top: 40px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      nav {
+        display: none;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .categories {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding: 60px 0 35px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .tools-grid,
+      .categories,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: auto;
+      }
+
+      .nav {
+        height: 66px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="navbar">
-  <div class="nav-inner">
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
 
-    <a href="index.html" class="logo">
-      Tar<span>exa</span>
-    </a>
+      <a href="#" class="logo">
+        <span class="logo-icon">T</span>
+        Tarexa
+      </a>
 
-    <nav class="nav-links">
-      <a href="#tools">Tools</a>
-      <a href="#categories">Categories</a>
-    </nav>
+      <nav>
+        <a href="#popular">Popular</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="nav-btn">Contact</a>
+      </nav>
 
-  </div>
-</header>
-
-
-<section class="hero">
-
-  <div class="hero-badge">
-    ✦ Free tools. Simple. Fast.
-  </div>
-
-  <h1>
-    Everything you need,<br>
-    <span>in one place.</span>
-  </h1>
-
-  <p class="hero-description">
-    Powerful online tools for calculations, conversions, PDFs,
-    security and everyday digital tasks.
-  </p>
-
-  <div class="search-container">
-    <span class="search-icon">⌕</span>
-    <input
-      type="search"
-      id="searchInput"
-      placeholder="What do you need?"
-      autocomplete="off"
-    >
-  </div>
-
-</section>
-
-
-<main class="container">
-
-<section id="tools">
-
-  <div class="section-header">
-    <div>
-      <h2>Popular tools</h2>
-      <p>Our most useful tools, ready when you need them.</p>
     </div>
-  </div>
+  </header>
 
-  <div class="tools-grid" id="toolsGrid">
 
-    <a class="tool" href="qr-code-generator.html">
-      <div class="tool-top">
-        <div class="tool-icon">▦</div>
-        <div class="arrow">→</div>
+  <!-- HERO -->
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <div class="badge">
+          ✦ Free Online Tools
+        </div>
+
+        <h1>
+          Powerful tools.<br>
+          <span class="gradient-text">Made simple.</span>
+        </h1>
+
+        <p>
+          Tarexa brings useful calculators, image tools, PDF tools,
+          AI tools, video and audio utilities together in one fast,
+          modern platform.
+        </p>
+
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input
+            type="search"
+            id="toolSearch"
+            placeholder="What do you need?"
+            aria-label="Search tools"
+          >
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- POPULAR TOOLS -->
+    <section id="popular">
+      <div class="container">
+
+        <div class="section-head">
+          <h2>⭐ Most Useful Tools</h2>
+          <p>Tools designed for real everyday needs.</p>
+        </div>
+
+        <div class="tools-grid" id="toolsGrid">
+
+          <!-- 1 -->
+          <a href="scientific-calculator.html"
+             class="tool-card"
+             data-name="scientific calculator calculator math">
+            <div class="tool-icon">🧮</div>
+            <h3>Scientific Calculator</h3>
+            <p>Calculate advanced mathematical equations, trigonometry, logarithms and more.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 2 -->
+          <a href="percentage-calculator.html"
+             class="tool-card"
+             data-name="percentage calculator math">
+            <div class="tool-icon">%</div>
+            <h3>Percentage Calculator</h3>
+            <p>Calculate percentages, increases, decreases and percentage differences.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 3 -->
+          <a href="age-calculator.html"
+             class="tool-card"
+             data-name="age calculator date birthday">
+            <div class="tool-icon">🎂</div>
+            <h3>Age Calculator</h3>
+            <p>Calculate exact age in years, months, days and more.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 4 -->
+          <a href="bmi-calculator.html"
+             class="tool-card"
+             data-name="bmi calculator health">
+            <div class="tool-icon">⚖️</div>
+            <h3>BMI Calculator</h3>
+            <p>Calculate BMI using height and weight with a simple interface.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 5 -->
+          <a href="discount-calculator.html"
+             class="tool-card"
+             data-name="discount calculator sale price">
+            <div class="tool-icon">🏷️</div>
+            <h3>Discount Calculator</h3>
+            <p>Calculate sale prices, discounts and total savings instantly.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 6 -->
+          <a href="background-remover.html"
+             class="tool-card"
+             data-name="ai image background remover photo">
+            <div class="tool-icon">✂️</div>
+            <h3>AI Background Remover</h3>
+            <p>Remove image backgrounds quickly for clean professional images.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 7 -->
+          <a href="image-compressor.html"
+             class="tool-card"
+             data-name="image compressor compress photo jpg png">
+            <div class="tool-icon">🖼️</div>
+            <h3>Image Compressor</h3>
+            <p>Reduce image file size while keeping images looking sharp.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 8 -->
+          <a href="image-resizer.html"
+             class="tool-card"
+             data-name="image resizer resize photo">
+            <div class="tool-icon">↔️</div>
+            <h3>Image Resizer</h3>
+            <p>Resize photos and images to the exact dimensions you need.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 9 -->
+          <a href="image-to-pdf.html"
+             class="tool-card"
+             data-name="image to pdf jpg png pdf">
+            <div class="tool-icon">📄</div>
+            <h3>Image to PDF</h3>
+            <p>Convert JPG and PNG images into convenient PDF documents.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 10 -->
+          <a href="pdf-compressor.html"
+             class="tool-card"
+             data-name="pdf compressor compress pdf">
+            <div class="tool-icon">📦</div>
+            <h3>PDF Compressor</h3>
+            <p>Reduce PDF file size for easier sharing and uploading.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 11 -->
+          <a href="ai-summarizer.html"
+             class="tool-card"
+             data-name="ai summarizer text summary">
+            <div class="tool-icon">🤖</div>
+            <h3>AI Text Summarizer</h3>
+            <p>Turn long text into concise and easy-to-understand summaries.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 12 -->
+          <a href="ai-rewriter.html"
+             class="tool-card"
+             data-name="ai text rewriter rewrite writing">
+            <div class="tool-icon">✨</div>
+            <h3>AI Text Rewriter</h3>
+            <p>Rewrite text to make it clearer, smoother and more professional.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 13 -->
+          <a href="video-compressor.html"
+             class="tool-card"
+             data-name="video compressor video size">
+            <div class="tool-icon">🎬</div>
+            <h3>Video Compressor</h3>
+            <p>Reduce video file size for easier storage and sharing.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 14 -->
+          <a href="video-to-mp3.html"
+             class="tool-card"
+             data-name="video to mp3 audio converter">
+            <div class="tool-icon">🎵</div>
+            <h3>Video to MP3</h3>
+            <p>Extract audio from supported video files quickly.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+          <!-- 15 -->
+          <a href="audio-compressor.html"
+             class="tool-card"
+             data-name="audio compressor mp3 audio">
+            <div class="tool-icon">🎧</div>
+            <h3>Audio Compressor</h3>
+            <p>Reduce audio file size for convenient storage and sharing.</p>
+            <span class="use-btn">Use Tool →</span>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section id="categories">
+      <div class="container">
+
+        <div class="section-head">
+          <h2>Explore Categories</h2>
+          <p>More useful tools will be added to Tarexa over time.</p>
+        </div>
+
+        <div class="categories">
+
+          <a href="#" class="category">
+            <span>🧮</span>
+            <h3>Calculators</h3>
+            <p>Everyday & scientific calculations</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🖼️</span>
+            <h3>Image Tools</h3>
+            <p>Compress, resize and edit images</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>📄</span>
+            <h3>PDF Tools</h3>
+            <p>Useful PDF utilities</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🤖</span>
+            <h3>AI Tools</h3>
+            <p>Smart productivity utilities</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🎬</span>
+            <h3>Video Tools</h3>
+            <p>Useful video utilities</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🎧</span>
+            <h3>Audio Tools</h3>
+            <p>Simple audio utilities</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🔄</span>
+            <h3>Converters</h3>
+            <p>Convert files and formats</p>
+          </a>
+
+          <a href="#" class="category">
+            <span>🔐</span>
+            <h3>Security Tools</h3>
+            <p>Useful privacy utilities</p>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+
+        <div class="info-box">
+          <h2>Why Tarexa?</h2>
+
+          <p>
+            Tarexa is built to provide useful online tools in one clean,
+            fast and easy-to-use platform. Our goal is to focus on tools
+            people actually need instead of filling the website with
+            unnecessary utilities.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer id="contact">
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-icon">T</span>
+            Tarexa
+          </div>
+
+          <p>
+            Useful online tools designed to make everyday digital tasks
+            faster, easier and simpler.
+          </p>
+        </div>
+
+
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <a href="#popular">Popular Tools</a>
+          <a href="#categories">Categories</a>
+          <a href="#about">About Tarexa</a>
+        </div>
+
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="https://t.me/Tarexaa" target="_blank" rel="noopener">
+            Telegram: @Tarexaa
+          </a>
+
+          <a href="mailto:hktareen789@gmail.com">
+            hktareen789@gmail.com
+          </a>
+        </div>
+
       </div>
 
-      <h3>QR Code Generator</h3>
-      <p>Create QR codes for links, text and more.</p>
-    </a>
 
-
-    <a class="tool" href="password-generator.html">
-      <div class="tool-top">
-        <div class="tool-icon">🔐</div>
-        <div class="arrow">→</div>
+      <div class="copyright">
+        © 2026 Tarexa. All rights reserved.
+        <br><br>
+        Built by <strong>HKtareen</strong>
       </div>
 
-      <h3>Password Generator</h3>
-      <p>Create strong and secure passwords instantly.</p>
-    </a>
-
-
-    <a class="tool" href="currency-converter.html">
-      <div class="tool-top">
-        <div class="tool-icon">💱</div>
-        <div class="arrow">→</div>
-      </div>
-
-      <h3>Currency Converter</h3>
-      <p>Convert currencies quickly and easily.</p>
-    </a>
-
-
-    <a class="tool" href="pdf-to-word.html">
-      <div class="tool-top">
-        <div class="tool-icon">📄</div>
-        <div class="arrow">→</div>
-      </div>
-
-      <h3>PDF to Word</h3>
-      <p>Turn PDF documents into editable Word files.</p>
-    </a>
-
-
-    <a class="tool" href="percentage-calculator.html">
-      <div class="tool-top">
-        <div class="tool-icon">%</div>
-        <div class="arrow">→</div>
-      </div>
-
-      <h3>Percentage Calculator</h3>
-      <p>Calculate percentages quickly and accurately.</p>
-    </a>
-
-  </div>
-
-</section>
-
-
-<section class="categories" id="categories">
-
-  <div class="section-header">
-    <div>
-      <h2>Explore categories</h2>
-      <p>Find the right tool for your task.</p>
     </div>
-  </div>
 
-  <div class="category-grid">
-
-    <a href="#" class="category">
-      <span class="category-icon">🧮</span>
-      Calculators
-    </a>
-
-    <a href="#" class="category">
-      <span class="category-icon">📄</span>
-      PDF Tools
-    </a>
-
-    <a href="#" class="category">
-      <span class="category-icon">🖼️</span>
-      Image Tools
-    </a>
-
-    <a href="#" class="category">
-      <span class="category-icon">✍️</span>
-      Text Tools
-    </a>
-
-    <a href="#" class="category">
-      <span class="category-icon">🔄</span>
-      Converters
-    </a>
-
-    <a href="#" class="category">
-      <span class="category-icon">🔐</span>
-      Security
-    </a>
-
-  </div>
-
-</section>
+  </footer>
 
 
-<section class="cta">
+  <!-- SEARCH SCRIPT -->
+  <script>
+    const searchInput = document.getElementById("toolSearch");
+    const cards = document.querySelectorAll(".tool-card");
 
-  <h2>Simple tools. Real results.</h2>
+    searchInput.addEventListener("input", function () {
 
-  <p>
-    Tarexa is built to make everyday online tasks faster,
-    easier and accessible from any device.
-  </p>
+      const query = this.value.toLowerCase().trim();
 
-</section>
+      cards.forEach(card => {
 
-</main>
+        const name = card.dataset.name.toLowerCase();
+        const text = card.innerText.toLowerCase();
 
+        if (name.includes(query) || text.includes(query)) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
 
-<footer>
+      });
 
-  <div class="footer-inner">
-
-    <div>
-      <div class="footer-brand">
-        Tar<span>exa</span>
-      </div>
-
-      <p class="footer-text">
-        Free and useful online tools for everyday digital tasks.
-      </p>
-    </div>
-
-    <div class="footer-copy">
-      © 2026 Tarexa. All rights reserved.
-    </div>
-
-  </div>
-
-</footer>
-
-
-<script>
-
-const searchInput = document.getElementById("searchInput");
-const tools = document.querySelectorAll(".tool");
-
-searchInput.addEventListener("input", function() {
-
-  const query = this.value.toLowerCase().trim();
-
-  tools.forEach(tool => {
-
-    const text = tool.innerText.toLowerCase();
-
-    if (text.includes(query)) {
-      tool.style.display = "block";
-    } else {
-      tool.style.display = "none";
-    }
-
-  });
-
-});
-
-</script>
+    });
+  </script>
 
 </body>
-  </html>
+            </html>
