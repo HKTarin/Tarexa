@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Age Calculator — Tarexa</title>
+
+  <meta name="description" content="Free Age Calculator by Tarexa. Calculate your exact age in years, months, days, weeks, hours and more.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="HKtareen">
+  <meta name="theme-color" content="#0b1020">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(108,99,255,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(0,212,255,.12), transparent 28%),
+        #070b16;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(7,11,22,.78);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      box-shadow: 0 8px 30px rgba(108,99,255,.35);
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #aeb5ca;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .nav-btn {
+      padding: 11px 17px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 65px 0 80px;
+    }
+
+    .breadcrumb {
+      color: #858ea3;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb a {
+      color: #a9a3ff;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .tool-icon {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      background: rgba(108,99,255,.14);
+      border: 1px solid rgba(108,99,255,.25);
+      font-size: 32px;
+      box-shadow: 0 15px 45px rgba(108,99,255,.12);
+    }
+
+    .tool-header h1 {
+      font-size: clamp(34px, 6vw, 54px);
+      letter-spacing: -2px;
+      margin-bottom: 14px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#8d82ff,#52c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tool-header p {
+      max-width: 650px;
+      margin: auto;
+      color: #9da6ba;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* CALCULATOR */
+
+    .calculator-card {
+      max-width: 850px;
+      margin: auto;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    }
+
+    .calculator-card h2 {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #858ea3;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .input-group label {
+      display: block;
+      color: #c5cad8;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 14px;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.11);
+      outline: none;
+      background: rgba(255,255,255,.055);
+      color: white;
+      font-size: 15px;
+      transition: .2s;
+    }
+
+    .input-group input:focus {
+      border-color: rgba(120,110,255,.7);
+      box-shadow: 0 0 0 3px rgba(108,99,255,.08);
+    }
+
+    .calculate-btn {
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 35px rgba(108,99,255,.25);
+      transition: .2s;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(108,99,255,.35);
+    }
+
+    .today-btn {
+      width: 100%;
+      margin-top: 11px;
+      padding: 13px;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.055);
+      color: #b9b4ff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .today-btn:hover {
+      background: rgba(255,255,255,.09);
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .main-result {
+      text-align: center;
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(108,99,255,.09);
+      border: 1px solid rgba(108,99,255,.2);
+      margin-bottom: 15px;
+    }
+
+    .result-label {
+      color: #929bb0;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .age-main {
+      font-size: clamp(27px,5vw,40px);
+      font-weight: 800;
+      background: linear-gradient(90deg,#9b91ff,#5ed1ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+    }
+
+    .result-item {
+      padding: 18px 10px;
+      text-align: center;
+      border-radius: 15px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .result-item strong {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 5px;
+    }
+
+    .result-item span {
+      color: #7f899f;
+      font-size: 12px;
+    }
+
+    .error {
+      display: none;
+      color: #ff8e9c;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    /* INFO */
+
+    .info-box {
+      max-width: 850px;
+      margin: 30px auto 0;
+      padding: 30px;
+      border-radius: 22px;
+      background: linear-gradient(
+        135deg,
+        rgba(108,99,255,.12),
+        rgba(54,190,255,.06)
+      );
+      border: 1px solid rgba(255,255,255,.09);
+      line-height: 1.8;
+    }
+
+    .info-box h2 {
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .info-box p {
+      color: #9da6ba;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 40px 0 25px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.15);
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-content p {
+      color: #666f83;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .footer-links {
+      margin-top: 18px;
+    }
+
+    .footer-links a {
+      color: #858ea3;
+      font-size: 13px;
+      margin: 0 8px;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      .nav {
+        height: 66px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .logo-icon {
+        width: 38px;
+        height: 38px;
+      }
+
+      nav a:not(.nav-btn) {
+        display: none;
+      }
+
+      main {
+        padding: 45px 0 60px;
+      }
+
+      .calculator-card {
+        padding: 22px;
+      }
+
+      .date-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .tool-header h1 {
+        letter-spacing: -1px;
+      }
+
+      .info-box {
+        padding: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="container nav">
+
+      <a href="index.html" class="logo">
+        <span class="logo-icon">T</span>
+        Tarexa
+      </a>
+
+      <nav>
+        <a href="index.html#popular">Popular</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-btn">Contact</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main>
+
+    <div class="container">
+
+      <div class="breadcrumb">
+        <a href="index.html">Tarexa</a>
+        &nbsp; / &nbsp; Age Calculator
+      </div>
+
+
+      <div class="tool-header">
+
+        <div class="tool-icon">🎂</div>
+
+        <h1>
+          Age <span class="gradient-text">Calculator</span>
+        </h1>
+
+        <p>
+          Calculate your exact age in years, months and days,
+          along with weeks, days, hours and minutes.
+        </p>
+
+      </div>
+
+
+      <div class="calculator-card">
+
+        <h2>Enter Your Date of Birth</h2>
+
+        <p class="description">
+          Select your birth date below to calculate your exact age.
+        </p>
+
+
+        <div class="date-grid">
+
+          <div class="input-group">
+            <label for="birthDay">Day</label>
+
+            <input
+              type="number"
+              id="birthDay"
+              min="1"
+              max="31"
+              placeholder="DD"
+            >
+          </div>
+
+
+          <div class="input-group">
+            <label for="birthMonth">Month</label>
+
+            <input
+              type="number"
+              id="birthMonth"
+              min="1"
+              max="12"
+              placeholder="MM"
+            >
+          </div>
+
+
+          <div class="input-group">
+            <label for="birthYear">Year</label>
+
+            <input
+              type="number"
+              id="birthYear"
+              min="1900"
+              max="2100"
+              placeholder="YYYY"
+            >
+          </div>
+
+        </div>
+
+
+        <button class="calculate-btn" onclick="calculateAge()">
+          Calculate My Age
+        </button>
+
+        <button class="today-btn" onclick="setToday()">
+          Use Today's Date
+        </button>
+
+
+        <div class="error" id="error">
+          Please enter a valid date of birth.
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="result" id="result">
+
+          <div class="main-result">
+
+            <div class="result-label">
+              Your Exact Age
+            </div>
+
+            <div class="age-main" id="ageMain">
+              0 Years, 0 Months, 0 Days
+            </div>
+
+          </div>
+
+
+          <div class="result-grid">
+
+            <div class="result-item">
+              <strong id="totalYears">0</strong>
+              <span>Years</span>
+            </div>
+
+            <div class="result-item">
+              <strong id="totalMonths">0</strong>
+              <span>Total Months</span>
+            </div>
+
+            <div class="result-item">
+              <strong id="totalWeeks">0</strong>
+              <span>Total Weeks</span>
+            </div>
+
+            <div class="result-item">
+              <strong id="totalDays">0</strong>
+              <span>Total Days</span>
+            </div>
+
+            <div class="result-item">
+              <strong id="totalHours">0</strong>
+              <span>Total Hours</span>
+            </div>
+
+            <div class="result-item">
+              <strong id="totalMinutes">0</strong>
+              <span>Total Minutes</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFO -->
+
+      <div class="info-box">
+
+        <h2>About Age Calculator</h2>
+
+        <p>
+          Tarexa Age Calculator helps you find your exact age based on
+          your date of birth. It calculates completed years, months and
+          days and also provides an approximate total number of weeks,
+          days, hours and minutes.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-content">
+
+        <div class="logo" style="justify-content:center;">
+          <span class="logo-icon">T</span>
+          Tarexa
+        </div>
+
+        <p>
+          Useful online tools designed to make everyday digital tasks
+          faster, easier and simpler.
+        </p>
+
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#popular">Popular Tools</a>
+          <a href="index.html#categories">Categories</a>
+        </div>
+
+        <p>
+          © 2026 Tarexa. All rights reserved.
+          <br><br>
+          Built by <strong>HKtareen</strong>
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function calculateAge() {
+
+      const day =
+        parseInt(document.getElementById("birthDay").value);
+
+      const month =
+        parseInt(document.getElementById("birthMonth").value);
+
+      const year =
+        parseInt(document.getElementById("birthYear").value);
+
+      const error =
+        document.getElementById("error");
+
+      const result =
+        document.getElementById("result");
+
+
+      if (
+        isNaN(day) ||
+        isNaN(month) ||
+        isNaN(year) ||
+        day < 1 ||
+        day > 31 ||
+        month < 1 ||
+        month > 12 ||
+        year < 1900
+      ) {
+
+        error.style.display = "block";
+        result.classList.remove("show");
+
+        return;
+      }
+
+
+      const birthDate =
+        new Date(year, month - 1, day);
+
+      const today =
+        new Date();
+
+
+      // Validate actual calendar date
+
+      if (
+        birthDate.getFullYear() !== year ||
+        birthDate.getMonth() !== month - 1 ||
+        birthDate.getDate() !== day ||
+        birthDate > today
+      ) {
+
+        error.textContent =
+          birthDate > today
+            ? "Date of birth cannot be in the future."
+            : "Please enter a valid calendar date.";
+
+        error.style.display = "block";
+        result.classList.remove("show");
+
+        return;
+      }
+
+
+      error.style.display = "none";
+
+
+      // Calculate exact age
+
+      let years =
+        today.getFullYear() - birthDate.getFullYear();
+
+      let months =
+        today.getMonth() - birthDate.getMonth();
+
+      let days =
+        today.getDate() - birthDate.getDate();
+
+
+      if (days < 0) {
+
+        months--;
+
+        const previousMonth =
+          new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+          );
+
+        days += previousMonth.getDate();
+      }
+
+
+      if (months < 0) {
+
+        years--;
+        months += 12;
+      }
+
+
+      // Total elapsed time
+
+      const milliseconds =
+        today.getTime() - birthDate.getTime();
+
+      const totalDays =
+        Math.floor(
+          milliseconds / (1000 * 60 * 60 * 24)
+        );
+
+      const totalWeeks =
+        Math.floor(totalDays / 7);
+
+      const totalMonths =
+        years * 12 + months;
+
+      const totalHours =
+        Math.floor(
+          milliseconds / (1000 * 60 * 60)
+        );
+
+      const totalMinutes =
+        Math.floor(
+          milliseconds / (1000 * 60)
+        );
+
+
+      document.getElementById("ageMain").textContent =
+        years + " Years, " +
+        months + " Months, " +
+        days + " Days";
+
+
+      document.getElementById("totalYears").textContent =
+        years.toLocaleString();
+
+      document.getElementById("totalMonths").textContent =
+        totalMonths.toLocaleString();
+
+      document.getElementById("totalWeeks").textContent =
+        totalWeeks.toLocaleString();
+
+      document.getElementById("totalDays").textContent =
+        totalDays.toLocaleString();
+
+      document.getElementById("totalHours").textContent =
+        totalHours.toLocaleString();
+
+      document.getElementById("totalMinutes").textContent =
+        totalMinutes.toLocaleString();
+
+
+      result.classList.add("show");
+    }
+
+
+    function setToday() {
+
+      const today =
+        new Date();
+
+      document.getElementById("birthDay").value =
+        today.getDate();
+
+      document.getElementById("birthMonth").value =
+        today.getMonth() + 1;
+
+      document.getElementById("birthYear").value =
+        today.getFullYear();
+
+    }
+
+
+    // ENTER KEY SUPPORT
+
+    document.addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        calculateAge();
+      }
+
+    });
+
+  </script>
+
+</body>
+              </html>
