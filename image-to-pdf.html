@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image to PDF — Tarexa</title>
+
+<meta name="description" content="Convert JPG, PNG and other images to PDF online for free with Tarexa Image to PDF.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b1020">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+  color:#f5f7ff;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(108,99,255,.18),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(0,212,255,.12),transparent 28%),
+    #070b16;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(950px,92%);
+  margin:auto;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(7,11,22,.8);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:23px;
+  font-weight:800;
+}
+
+.logo-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg,#766cff,#4e8cff);
+  box-shadow:0 8px 25px rgba(108,99,255,.3);
+}
+
+.back{
+  color:#a9a3ff;
+  font-size:14px;
+  font-weight:700;
+}
+
+main{
+  padding:60px 0;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:50px;
+  background:rgba(108,99,255,.1);
+  border:1px solid rgba(120,110,255,.3);
+  color:#b9b4ff;
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+h1{
+  font-size:clamp(36px,7vw,58px);
+  letter-spacing:-2px;
+  margin-bottom:15px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#8d82ff,#52c9ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:650px;
+  margin:auto;
+  color:#9da6bb;
+  line-height:1.7;
+}
+
+.tool-box{
+  padding:32px;
+  border-radius:25px;
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.075),
+    rgba(255,255,255,.025)
+  );
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.upload{
+  display:block;
+  border:2px dashed rgba(140,130,255,.35);
+  border-radius:20px;
+  padding:45px 20px;
+  text-align:center;
+  cursor:pointer;
+  background:rgba(108,99,255,.05);
+  transition:.2s;
+}
+
+.upload:hover{
+  border-color:rgba(140,130,255,.75);
+  background:rgba(108,99,255,.09);
+}
+
+.upload-icon{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.upload h2{
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+.upload p{
+  color:#858ea3;
+  font-size:14px;
+  margin-bottom:18px;
+}
+
+.upload-btn{
+  display:inline-block;
+  padding:12px 20px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#766cff,#4e8cff);
+  font-weight:700;
+  font-size:14px;
+}
+
+#imageInput{
+  display:none;
+}
+
+.image-list{
+  display:none;
+  margin-top:25px;
+}
+
+.image-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:15px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.image-item img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:10px;
+  background:#111827;
+}
+
+.image-info{
+  flex:1;
+  min-width:0;
+}
+
+.image-info strong{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.image-info span{
+  display:block;
+  color:#7f899e;
+  font-size:12px;
+  margin-top:6px;
+}
+
+.remove-btn{
+  border:none;
+  background:rgba(255,70,70,.1);
+  color:#ff8d8d;
+  padding:9px 12px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+.options{
+  display:none;
+  margin-top:25px;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.option{
+  padding:17px;
+  border-radius:15px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.option label{
+  display:block;
+  color:#aeb5ca;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.option select{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#0c1222;
+  color:white;
+  outline:none;
+}
+
+.actions{
+  display:none;
+  gap:12px;
+  margin-top:20px;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+}
+
+.pdf-btn{
+  flex:1;
+  padding:14px 20px;
+  border-radius:13px;
+  color:white;
+  background:linear-gradient(135deg,#766cff,#4e8cff);
+}
+
+.clear-btn{
+  padding:14px 20px;
+  border-radius:13px;
+  color:#b6bdd0;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.status{
+  text-align:center;
+  margin-top:18px;
+  color:#858ea3;
+  font-size:13px;
+}
+
+footer{
+  text-align:center;
+  padding:30px 15px;
+  color:#687186;
+  border-top:1px solid rgba(255,255,255,.07);
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  main{
+    padding:40px 0;
+  }
+
+  .tool-box{
+    padding:20px;
+  }
+
+  .options{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .image-item{
+    align-items:flex-start;
+  }
+
+  .image-item img{
+    width:58px;
+    height:58px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+      <span class="logo-icon">T</span>
+      Tarexa
+    </a>
+
+    <a href="index.html" class="back">
+      ← Back to Home
+    </a>
+
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <div class="hero">
+
+      <div class="badge">
+        ✦ Free PDF Tool
+      </div>
+
+      <h1>
+        Image <span class="gradient">to PDF</span>
+      </h1>
+
+      <p>
+        Convert JPG, PNG and other images into a single PDF document.
+        Add multiple images, arrange them and download your PDF.
+      </p>
+
+    </div>
+
+    <div class="tool-box">
+
+      <label class="upload" for="imageInput">
+
+        <div class="upload-icon">📄</div>
+
+        <h2>Select Images</h2>
+
+        <p>
+          Choose one or multiple JPG, PNG, WEBP or other images
+        </p>
+
+        <span class="upload-btn">
+          Choose Images
+        </span>
+
+      </label>
+
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        multiple
+      >
+
+      <div class="image-list" id="imageList"></div>
+
+      <div class="options" id="options">
+
+        <div class="option">
+
+          <label for="pageSize">
+            PDF Page Size
+          </label>
+
+          <select id="pageSize">
+
+            <option value="a4">
+              A4
+            </option>
+
+            <option value="letter">
+              Letter
+            </option>
+
+            <option value="original">
+              Image Size
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="option">
+
+          <label for="orientation">
+            Orientation
+          </label>
+
+          <select id="orientation">
+
+            <option value="auto">
+              Automatic
+            </option>
+
+            <option value="portrait">
+              Portrait
+            </option>
+
+            <option value="landscape">
+              Landscape
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="actions" id="actions">
+
+        <button
+          class="pdf-btn"
+          onclick="createPDF()"
+        >
+          📄 Create PDF
+        </button>
+
+        <button
+          class="clear-btn"
+          onclick="clearImages()"
+        >
+          Clear
+        </button>
+
+      </div>
+
+      <div class="status" id="status">
+        No images selected.
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  © 2026 Tarexa. All rights reserved.
+</footer>
+
+<script>
+const imageInput = document.getElementById("imageInput");
+const imageList = document.getElementById("imageList");
+const options = document.getElementById("options");
+const actions = document.getElementById("actions");
+const statusText = document.getElementById("status");
+
+let images = [];
+
+imageInput.addEventListener("change", function(){
+
+  const files = Array.from(this.files);
+
+  files.forEach(file => {
+
+    if(!file.type.startsWith("image/")){
+      return;
+    }
+
+    images.push(file);
+
+  });
+
+  renderImages();
+
+  imageInput.value = "";
+
+});
+
+
+function renderImages(){
+
+  imageList.innerHTML = "";
+
+  if(images.length === 0){
+
+    imageList.style.display = "none";
+    options.style.display = "none";
+    actions.style.display = "none";
+
+    statusText.textContent =
+      "No images selected.";
+
+    return;
+  }
+
+  imageList.style.display = "block";
+  options.style.display = "grid";
+  actions.style.display = "flex";
+
+  statusText.textContent =
+    `${images.length} image${images.length > 1 ? "s" : ""} selected.`;
+
+  images.forEach((file,index)=>{
+
+    const item = document.createElement("div");
+
+    item.className = "image-item";
+
+    const img = document.createElement("img");
+
+    img.src = URL.createObjectURL(file);
+
+    const info = document.createElement("div");
+
+    info.className = "image-info";
+
+    const name = document.createElement("strong");
+
+    name.textContent = file.name;
+
+    const size = document.createElement("span");
+
+    size.textContent =
+      `${formatBytes(file.size)} • Image ${index + 1}`;
+
+    info.appendChild(name);
+    info.appendChild(size);
+
+    const remove = document.createElement("button");
+
+    remove.className = "remove-btn";
+
+    remove.textContent = "Remove";
+
+    remove.onclick = function(){
+
+      images.splice(index,1);
+
+      renderImages();
+
+    };
+
+    item.appendChild(img);
+    item.appendChild(info);
+    item.appendChild(remove);
+
+    imageList.appendChild(item);
+
+  });
+
+}
+
+
+function formatBytes(bytes){
+
+  if(bytes === 0){
+    return "0 Bytes";
+  }
+
+  const units = [
+    "Bytes",
+    "KB",
+    "MB",
+    "GB"
+  ];
+
+  const i =
+    Math.floor(
+      Math.log(bytes) / Math.log(1024)
+    );
+
+  return (
+    parseFloat(
+      (bytes / Math.pow(1024,i)).toFixed(2)
+    ) +
+    " " +
+    units[i]
+  );
+
+}
+
+
+function clearImages(){
+
+  images = [];
+
+  renderImages();
+
+}
+
+
+function loadImage(file){
+
+  return new Promise((resolve,reject)=>{
+
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+
+      const img = new Image();
+
+      img.onload = function(){
+
+        resolve(img);
+
+      };
+
+      img.onerror = reject;
+
+      img.src = event.target.result;
+
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+
+async function createPDF(){
+
+  if(images.length === 0){
+
+    alert("Please select at least one image.");
+
+    return;
+
+  }
+
+  statusText.textContent =
+    "Preparing your PDF...";
+
+  try{
+
+    /*
+      Lightweight client-side PDF generator.
+      No image is uploaded to a server.
+    */
+
+    const pageSize =
+      document.getElementById("pageSize").value;
+
+    const orientation =
+      document.getElementById("orientation").value;
+
+    let pages = [];
+
+    for(const file of images){
+
+      const img = await loadImage(file);
+
+      let pageWidth = 595;
+      let pageHeight = 842;
+
+      if(pageSize === "letter"){
+
+        pageWidth = 612;
+        pageHeight = 792;
+
+      }
+
+      if(pageSize === "original"){
+
+        pageWidth = img.naturalWidth;
+        pageHeight = img.naturalHeight;
+
+      }
+
+      if(
+        orientation === "landscape" ||
+        (
+          orientation === "auto" &&
+          img.naturalWidth > img.naturalHeight
+        )
+      ){
+
+        const temp = pageWidth;
+
+        pageWidth = pageHeight;
+        pageHeight = temp;
+
+      }
+
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width =
+        Math.round(pageWidth);
+
+      canvas.height =
+        Math.round(pageHeight);
+
+      const ctx =
+        canvas.getContext("2d");
+
+      ctx.fillStyle = "#ffffff";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const margin = 25;
+
+      const maxWidth =
+        canvas.width - margin * 2;
+
+      const maxHeight =
+        canvas.height - margin * 2;
+
+      const scale =
+        Math.min(
+          maxWidth / img.naturalWidth,
+          maxHeight / img.naturalHeight
+        );
+
+      const drawWidth =
+        img.naturalWidth * scale;
+
+      const drawHeight =
+        img.naturalHeight * scale;
+
+      const x =
+        (canvas.width - drawWidth) / 2;
+
+      const y =
+        (canvas.height - drawHeight) / 2;
+
+      ctx.drawImage(
+        img,
+        x,
+        y,
+        drawWidth,
+        drawHeight
+      );
+
+      pages.push(
+        canvas.toDataURL("image/jpeg",0.92)
+      );
+
+    }
+
+    /*
+      Build a simple PDF from generated JPEG pages.
+    */
+
+    const pdf =
+      buildPDF(pages);
+
+    const blob =
+      new Blob(
+        [pdf],
+        {type:"application/pdf"}
+      );
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+      "tarexa-images.pdf";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+    statusText.textContent =
+      "PDF created successfully. Download started.";
+
+  }catch(error){
+
+    console.error(error);
+
+    statusText.textContent =
+      "Something went wrong while creating the PDF.";
+
+    alert(
+      "Unable to create the PDF. Please try another image."
+    );
+
+  }
+
+}
+
+
+function buildPDF(imageData){
+
+  let objects = [];
+
+  objects.push(
+    "1 0 obj\n" +
+    "<< /Type /Catalog /Pages 2 0 R >>\n" +
+    "endobj\n"
+  );
+
+  const pageIds = [];
+
+  const startId = 3;
+
+  imageData.forEach((data,index)=>{
+
+    const pageId =
+      startId + index * 3;
+
+    const imageId =
+      pageId + 1;
+
+    const contentId =
+      pageId + 2;
+
+    pageIds.push(pageId);
+
+    const base64 =
+      data.split(",")[1];
+
+    const binary =
+      atob(base64);
+
+    const bytes =
+      new Uint8Array(binary.length);
+
+    for(let i=0;i<binary.length;i++){
+
+      bytes[i] =
+        binary.charCodeAt(i);
+
+    }
+
+    const page =
+      `${pageId} 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/XObject << /Im${index + 1} ${imageId} 0 R >>
+>>
+/MediaBox [0 0 595 842]
+/Contents ${contentId} 0 R
+>>
+endobj
+`;
+
+    const image =
+      `${imageId} 0 obj
+<<
+/Type /XObject
+/Subtype /Image
+/Width 595
+/Height 842
+/ColorSpace /DeviceRGB
+/BitsPerComponent 8
+/Filter /DCTDecode
+/Length ${bytes.length}
+>>
+stream
+`;
+
+    const contentText =
+      `q
+595 0 0 842 0 0 cm
+/Im${index + 1} Do
+Q
+`;
+
+    const content =
+      `${contentId} 0 obj
+<< /Length ${contentText.length} >>
+stream
+${contentText}
+endstream
+endobj
+`;
+
+    objects.push({
+      page,
+      image,
+      bytes,
+      content
+    });
+
+  });
+
+  const pagesObject =
+    `2 0 obj
+<<
+/Type /Pages
+/Kids [${pageIds.map(id=>id+" 0 R").join(" ")}]
+/Count ${pageIds.length}
+>>
+endobj
+`;
+
+  let pdf =
+    "%PDF-1.4\n";
+
+  const offsets = [0];
+
+  function addText(text){
+
+    offsets.push(
+      pdf.length
+    );
+
+    pdf += text;
+
+  }
+
+  addText(
+    objects[0]
+  );
+
+  addText(
+    pagesObject
+  );
+
+  objects.slice(1).forEach(obj=>{
+
+    addText(obj.page);
+
+    offsets.push(
+      pdf.length
+    );
+
+    pdf +=
+      obj.image +
+      obj.bytesToString;
+
+    addText(
+      obj.content
+    );
+
+  });
+
+  const xref =
+    pdf.length;
+
+  pdf +=
+    "xref\n" +
+    `0 ${offsets.length}\n` +
+    "0000000000 65535 f \n";
+
+  for(let i=1;i<offsets.length;i++){
+
+    pdf +=
+      String(offsets[i])
+      .padStart(10,"0") +
+      " 00000 n \n";
+
+  }
+
+  pdf +=
+    "trailer\n" +
+    `<< /Size ${offsets.length} /Root 1 0 R >>\n` +
+    "startxref\n" +
+    xref +
+    "\n%%EOF";
+
+  return pdf;
+
+}
+</script>
+
+</body>
+  </html>
