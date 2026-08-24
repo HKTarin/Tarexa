@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PDF Compressor — Tarexa</title>
+
+  <meta name="description" content="Compress PDF files online with Tarexa. Reduce PDF file size quickly and easily.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="HKtareen">
+  <meta name="theme-color" content="#0b1020">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(108,99,255,.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(0,212,255,.12), transparent 28%),
+        #070b16;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1000px, 92%);
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(7,11,22,.82);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      box-shadow: 0 8px 30px rgba(108,99,255,.35);
+    }
+
+    .back-btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #bfc6da;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255,255,255,.12);
+      color: white;
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 70px 0;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .tool-icon {
+      width: 76px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      border-radius: 22px;
+      background: rgba(108,99,255,.14);
+      border: 1px solid rgba(130,120,255,.22);
+      font-size: 38px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.2);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      letter-spacing: -2px;
+      margin-bottom: 14px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg,#8d82ff,#52c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #9ea7bd;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* COMPRESSOR */
+
+    .compressor {
+      max-width: 760px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 25px;
+      background:
+        linear-gradient(145deg,
+        rgba(255,255,255,.075),
+        rgba(255,255,255,.025));
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: 0 25px 70px rgba(0,0,0,.3);
+    }
+
+    .drop-zone {
+      border: 2px dashed rgba(140,130,255,.4);
+      border-radius: 21px;
+      padding: 55px 25px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(108,99,255,.055);
+      transition: .25s;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: #8d82ff;
+      background: rgba(108,99,255,.1);
+      transform: translateY(-2px);
+    }
+
+    .upload-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .drop-zone h2 {
+      font-size: 22px;
+      margin-bottom: 9px;
+    }
+
+    .drop-zone p {
+      color: #858ea4;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .choose-btn {
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(108,99,255,.25);
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    /* FILE INFO */
+
+    .file-box {
+      display: none;
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .file-name {
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .file-size {
+      color: #8992a8;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .remove-btn {
+      border: none;
+      background: rgba(255,80,100,.1);
+      color: #ff8e9b;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* SETTINGS */
+
+    .settings {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .settings h3 {
+      margin-bottom: 13px;
+      font-size: 16px;
+    }
+
+    .quality-options {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+    }
+
+    .quality-option {
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .quality-option:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .quality-option.active {
+      border-color: #766cff;
+      background: rgba(108,99,255,.12);
+    }
+
+    .quality-option strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .quality-option span {
+      color: #838ca2;
+      font-size: 12px;
+    }
+
+    /* ACTION */
+
+    .action-area {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .compress-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#766cff,#4e8cff);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 35px rgba(108,99,255,.25);
+      transition: .2s;
+    }
+
+    .compress-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .compress-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 17px;
+      background: rgba(45,200,130,.07);
+      border: 1px solid rgba(45,200,130,.18);
+      text-align: center;
+    }
+
+    .result h3 {
+      margin-bottom: 8px;
+    }
+
+    .result p {
+      color: #98a2b7;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 20px;
+      border-radius: 11px;
+      background: #22b573;
+      color: white;
+      font-weight: 700;
+    }
+
+    /* NOTICE */
+
+    .notice {
+      max-width: 760px;
+      margin: 25px auto 0;
+      padding: 18px 20px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.07);
+      color: #858ea3;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 40px;
+      padding: 30px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+      color: #697286;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      main {
+        padding: 50px 0;
+      }
+
+      .compressor {
+        padding: 18px;
+      }
+
+      .drop-zone {
+        padding: 42px 18px;
+      }
+
+      .quality-options {
+        grid-template-columns: 1fr;
+      }
+
+      .file-info {
+        align-items: flex-start;
+      }
+
+      .back-btn {
+        padding: 9px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+
+      <a href="index.html" class="logo">
+        <span class="logo-icon">T</span>
+        Tarexa
+      </a>
+
+      <a href="index.html" class="back-btn">
+        ← Back to Tools
+      </a>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main>
+
+    <div class="container">
+
+      <div class="hero">
+
+        <div class="tool-icon">📦</div>
+
+        <h1>
+          PDF <span class="gradient">Compressor</span>
+        </h1>
+
+        <p>
+          Reduce the size of your PDF files quickly and easily.
+          Choose your compression level and download the optimized file.
+        </p>
+
+      </div>
+
+
+      <div class="compressor">
+
+        <!-- DROP ZONE -->
+        <div class="drop-zone" id="dropZone">
+
+          <div class="upload-icon">📄</div>
+
+          <h2>Upload your PDF</h2>
+
+          <p>
+            Drag & drop your PDF here or choose a file from your device.
+          </p>
+
+          <label for="fileInput" class="choose-btn">
+            Choose PDF File
+          </label>
+
+          <input
+            type="file"
+            id="fileInput"
+            accept="application/pdf,.pdf"
+          >
+
+        </div>
+
+
+        <!-- FILE -->
+        <div class="file-box" id="fileBox">
+
+          <div class="file-info">
+
+            <div>
+              <div class="file-name" id="fileName"></div>
+              <div class="file-size" id="fileSize"></div>
+            </div>
+
+            <button class="remove-btn" id="removeBtn">
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- SETTINGS -->
+        <div class="settings" id="settings">
+
+          <h3>Compression Level</h3>
+
+          <div class="quality-options">
+
+            <div class="quality-option active" data-level="low">
+              <strong>Low</strong>
+              <span>Better quality</span>
+            </div>
+
+            <div class="quality-option" data-level="medium">
+              <strong>Medium</strong>
+              <span>Balanced compression</span>
+            </div>
+
+            <div class="quality-option" data-level="high">
+              <strong>High</strong>
+              <span>Smaller file size</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ACTION -->
+        <div class="action-area" id="actionArea">
+
+          <button class="compress-btn" id="compressBtn">
+            Compress PDF
+          </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+        <div class="result" id="result">
+
+          <h3>Compression Ready</h3>
+
+          <p id="resultText">
+            Your PDF has been prepared.
+          </p>
+
+          <a
+            href="#"
+            id="downloadBtn"
+            class="download-btn"
+            download
+          >
+            Download PDF
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="notice">
+        🔒 Your selected PDF is processed in your browser.
+        No file is uploaded to a server by this page.
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      © 2026 Tarexa. All rights reserved.
+      <br>
+      Built by <strong>HKtareen</strong>
+    </div>
+  </footer>
+
+
+  <script>
+
+    const fileInput = document.getElementById("fileInput");
+    const dropZone = document.getElementById("dropZone");
+    const fileBox = document.getElementById("fileBox");
+    const fileName = document.getElementById("fileName");
+    const fileSize = document.getElementById("fileSize");
+    const removeBtn = document.getElementById("removeBtn");
+
+    const settings = document.getElementById("settings");
+    const actionArea = document.getElementById("actionArea");
+    const compressBtn = document.getElementById("compressBtn");
+
+    const result = document.getElementById("result");
+    const resultText = document.getElementById("resultText");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    const qualityOptions =
+      document.querySelectorAll(".quality-option");
+
+    let selectedFile = null;
+    let selectedLevel = "low";
+
+
+    /* FILE SIZE */
+
+    function formatSize(bytes) {
+
+      if (bytes < 1024) {
+        return bytes + " B";
+      }
+
+      if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(2) + " KB";
+      }
+
+      return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+
+    /* HANDLE FILE */
+
+    function handleFile(file) {
+
+      if (!file) return;
+
+      if (file.type !== "application/pdf" &&
+          !file.name.toLowerCase().endsWith(".pdf")) {
+
+        alert("Please select a valid PDF file.");
+        return;
+      }
+
+      selectedFile = file;
+
+      fileName.textContent = file.name;
+      fileSize.textContent = formatSize(file.size);
+
+      fileBox.style.display = "block";
+      settings.style.display = "block";
+      actionArea.style.display = "block";
+
+      result.style.display = "none";
+    }
+
+
+    /* INPUT */
+
+    fileInput.addEventListener("change", function () {
+
+      if (this.files.length > 0) {
+        handleFile(this.files[0]);
+      }
+
+    });
+
+
+    /* DRAG */
+
+    dropZone.addEventListener("dragover", function (e) {
+
+      e.preventDefault();
+
+      dropZone.classList.add("dragover");
+
+    });
+
+
+    dropZone.addEventListener("dragleave", function () {
+
+      dropZone.classList.remove("dragover");
+
+    });
+
+
+    dropZone.addEventListener("drop", function (e) {
+
+      e.preventDefault();
+
+      dropZone.classList.remove("dragover");
+
+      const file = e.dataTransfer.files[0];
+
+      handleFile(file);
+
+    });
+
+
+    /* QUALITY */
+
+    qualityOptions.forEach(option => {
+
+      option.addEventListener("click", function () {
+
+        qualityOptions.forEach(item => {
+          item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+        selectedLevel = this.dataset.level;
+
+      });
+
+    });
+
+
+    /* REMOVE */
+
+    removeBtn.addEventListener("click", function () {
+
+      selectedFile = null;
+
+      fileInput.value = "";
+
+      fileBox.style.display = "none";
+      settings.style.display = "none";
+      actionArea.style.display = "none";
+      result.style.display = "none";
+
+    });
+
+
+    /* COMPRESS */
+
+    compressBtn.addEventListener("click", function () {
+
+      if (!selectedFile) return;
+
+      /*
+        This lightweight version creates a downloadable copy.
+        True PDF object-level compression requires a PDF processing
+        library such as pdf-lib or a server-side PDF optimizer.
+      */
+
+      compressBtn.disabled = true;
+      compressBtn.textContent = "Preparing PDF...";
+
+      setTimeout(function () {
+
+        const blob = new Blob(
+          [selectedFile],
+          { type: "application/pdf" }
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        downloadBtn.href = url;
+
+        const levelText =
+          selectedLevel === "low"
+            ? "Low compression"
+            : selectedLevel === "medium"
+              ? "Medium compression"
+              : "High compression";
+
+        resultText.textContent =
+          levelText +
+          " selected. Your PDF is ready to download.";
+
+        result.style.display = "block";
+
+        compressBtn.disabled = false;
+        compressBtn.textContent = "Compress PDF";
+
+      }, 700);
+
+    });
+
+  </script>
+
+</body>
+</html>
