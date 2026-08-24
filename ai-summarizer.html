@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Text Summarizer — Tarexa</title>
+
+<meta name="description" content="Summarize long text quickly with Tarexa AI Text Summarizer. Free and easy to use.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="HKtareen">
+<meta name="theme-color" content="#070b16">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(108,99,255,.18),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(0,212,255,.12),transparent 28%),
+    #070b16;
+  color:#f5f7ff;
+  min-height:100vh;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(1050px,92%);
+  margin:auto;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(18px);
+  background:rgba(7,11,22,.82);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:24px;
+  font-weight:800;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(135deg,#766cff,#4e8cff);
+  box-shadow:0 8px 30px rgba(108,99,255,.35);
+}
+
+.back{
+  padding:10px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  color:#bfc6da;
+  font-size:14px;
+}
+
+main{
+  padding:65px 0;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.icon{
+  width:76px;
+  height:76px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 20px;
+  border-radius:22px;
+  background:rgba(108,99,255,.14);
+  border:1px solid rgba(130,120,255,.25);
+  font-size:38px;
+}
+
+h1{
+  font-size:clamp(36px,6vw,58px);
+  letter-spacing:-2px;
+  margin-bottom:14px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#8d82ff,#52c9ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:650px;
+  margin:auto;
+  color:#9ea7bd;
+  font-size:16px;
+  line-height:1.7;
+}
+
+.app{
+  padding:28px;
+  border-radius:25px;
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.075),
+    rgba(255,255,255,.025)
+  );
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.box{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  padding:20px;
+}
+
+.box h2{
+  font-size:18px;
+  margin-bottom:12px;
+}
+
+textarea{
+  width:100%;
+  min-height:330px;
+  resize:vertical;
+  padding:17px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  outline:none;
+  background:#0b1020;
+  color:white;
+  font-size:15px;
+  line-height:1.6;
+  font-family:inherit;
+}
+
+textarea:focus{
+  border-color:rgba(130,120,255,.7);
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+select{
+  padding:12px 14px;
+  border-radius:11px;
+  background:#11172a;
+  color:white;
+  border:1px solid rgba(255,255,255,.1);
+  outline:none;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  font-family:inherit;
+}
+
+.primary{
+  padding:13px 20px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#766cff,#4e8cff);
+  color:white;
+  font-weight:800;
+  box-shadow:0 10px 30px rgba(108,99,255,.25);
+}
+
+.secondary{
+  padding:13px 18px;
+  border-radius:11px;
+  background:rgba(255,255,255,.07);
+  color:#c6ccdc;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+button:hover{
+  transform:translateY(-1px);
+}
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  color:#778197;
+  font-size:12px;
+}
+
+#output{
+  min-height:330px;
+  white-space:pre-wrap;
+  color:#dce1ee;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.placeholder{
+  color:#687287;
+}
+
+footer{
+  margin-top:40px;
+  padding:30px 0;
+  border-top:1px solid rgba(255,255,255,.08);
+  text-align:center;
+  color:#697286;
+  font-size:13px;
+}
+
+@media(max-width:700px){
+  main{
+    padding:45px 0;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .app{
+    padding:17px;
+  }
+
+  textarea,
+  #output{
+    min-height:260px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+      <span class="logo-icon">T</span>
+      Tarexa
+    </a>
+
+    <a href="index.html" class="back">
+      ← Back to Tools
+    </a>
+
+  </div>
+</header>
+
+<main>
+
+<div class="container">
+
+<section class="hero">
+
+  <div class="icon">🤖</div>
+
+  <h1>
+    AI Text <span class="gradient">Summarizer</span>
+  </h1>
+
+  <p>
+    Turn long text into a shorter, clearer and easier-to-read summary.
+    Fast, simple and completely free.
+  </p>
+
+</section>
+
+<section class="app">
+
+<div class="grid">
+
+<div class="box">
+
+<h2>📝 Your Text</h2>
+
+<textarea
+id="inputText"
+placeholder="Paste your article, notes, paragraph or any long text here..."
+></textarea>
+
+<div class="stats">
+  <span id="wordCount">0 words</span>
+  <span id="charCount">0 characters</span>
+</div>
+
+<div class="controls">
+
+<select id="length">
+  <option value="short">Short Summary</option>
+  <option value="medium" selected>Medium Summary</option>
+  <option value="long">Detailed Summary</option>
+</select>
+
+<button class="primary" id="summarizeBtn">
+  ✨ Summarize
+</button>
+
+<button class="secondary" id="clearBtn">
+  Clear
+</button>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>📄 Summary</h2>
+
+<div id="output">
+  <span class="placeholder">
+    Your summary will appear here...
+  </span>
+</div>
+
+<div class="controls">
+
+<button class="secondary" id="copyBtn">
+  📋 Copy Summary
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 Tarexa. All rights reserved.
+    <br><br>
+    Built by <strong>HKtareen</strong>
+  </div>
+</footer>
+
+<script>
+
+const inputText = document.getElementById("inputText");
+const output = document.getElementById("output");
+const summarizeBtn = document.getElementById("summarizeBtn");
+const clearBtn = document.getElementById("clearBtn");
+const copyBtn = document.getElementById("copyBtn");
+const lengthSelect = document.getElementById("length");
+const wordCount = document.getElementById("wordCount");
+const charCount = document.getElementById("charCount");
+
+function updateStats(){
+
+  const text = inputText.value.trim();
+
+  const words = text
+    ? text.split(/\s+/).length
+    : 0;
+
+  wordCount.textContent =
+    words + (words === 1 ? " word" : " words");
+
+  charCount.textContent =
+    text.length + " characters";
+}
+
+inputText.addEventListener("input",updateStats);
+
+function splitSentences(text){
+
+  return text
+    .replace(/\s+/g," ")
+    .match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+    || [];
+}
+
+function summarizeText(text,mode){
+
+  const sentences = splitSentences(text);
+
+  if(sentences.length <= 2){
+    return text.trim();
+  }
+
+  const words = text.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+
+  const frequency = {};
+
+  words.forEach(word=>{
+    frequency[word] = (frequency[word] || 0) + 1;
+  });
+
+  const scored = sentences.map((sentence,index)=>{
+
+    const sentenceWords =
+      sentence.toLowerCase().match(/\b[a-z]{3,}\b/g) || [];
+
+    let score = 0;
+
+    sentenceWords.forEach(word=>{
+      score += frequency[word] || 0;
+    });
+
+    score = score / Math.max(sentenceWords.length,1);
+
+    if(index === 0){
+      score += 2;
+    }
+
+    return {
+      sentence:sentence.trim(),
+      score:score,
+      index:index
+    };
+
+  });
+
+  let count;
+
+  if(mode === "short"){
+    count = Math.max(2,Math.ceil(sentences.length * .25));
+  }
+  else if(mode === "long"){
+    count = Math.max(3,Math.ceil(sentences.length * .55));
+  }
+  else{
+    count = Math.max(2,Math.ceil(sentences.length * .4));
+  }
+
+  count = Math.min(count,sentences.length);
+
+  const selected = scored
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,count)
+    .sort((a,b)=>a.index-b.index);
+
+  return selected
+    .map(item=>item.sentence)
+    .join(" ");
+
+}
+
+summarizeBtn.addEventListener("click",()=>{
+
+  const text = inputText.value.trim();
+
+  if(!text){
+    alert("Please enter some text first.");
+    return;
+  }
+
+  if(text.length < 80){
+    output.textContent =
+      "Please enter a longer text so it can be summarized more effectively.";
+    return;
+  }
+
+  summarizeBtn.disabled = true;
+  summarizeBtn.textContent = "⏳ Summarizing...";
+
+  output.innerHTML =
+    '<span class="placeholder">Creating your summary...</span>';
+
+  setTimeout(()=>{
+
+    const summary =
+      summarizeText(text,lengthSelect.value);
+
+    output.textContent = summary;
+
+    summarizeBtn.disabled = false;
+    summarizeBtn.textContent = "✨ Summarize";
+
+  },500);
+
+});
+
+clearBtn.addEventListener("click",()=>{
+
+  inputText.value = "";
+
+  output.innerHTML =
+    '<span class="placeholder">Your summary will appear here...</span>';
+
+  updateStats();
+
+});
+
+copyBtn.addEventListener("click",async()=>{
+
+  const text = output.textContent.trim();
+
+  if(!text || text === "Your summary will appear here..."){
+    alert("There is no summary to copy.");
+    return;
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    copyBtn.textContent = "✓ Copied!";
+
+    setTimeout(()=>{
+      copyBtn.textContent = "📋 Copy Summary";
+    },1500);
+
+  }catch(error){
+
+    alert("Unable to copy the summary.");
+
+  }
+
+});
+
+updateStats();
+
+</script>
+
+</body>
+  </html>
